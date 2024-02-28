@@ -1,0 +1,54 @@
+<label id="example-radio-group-label">Selectionner Un Fichier </label>
+<div   style="height: 80vh;overflow-y: auto;" fxLayout="row wrap" fxLayoutGap="15px" fxLayoutAlign="flex-start">
+      
+<mat-radio-group
+  aria-labelledby="example-radio-group-label"
+  class="example-radio-group"
+  [(ngModel)]="favoriteFruit" >
+
+<mat-tree  #tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
+  <!-- This is the tree node template for leaf nodes -->
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+    <li class="mat-tree-node">
+      <!-- use a disabled button to provide padding for tree leaf -->
+      <button class="btn" mat-icon-button disabled></button>
+           <mat-radio-button [value]="node.id">{{node.name}} <samp style="color: rgb(223, 218, 211);"> | </samp>   <samp style="color: rgb(151, 147, 141);"> {{node.time}} | {{node.size}}</samp> </mat-radio-button>
+
+    </li>
+  </mat-tree-node>
+  <!-- This is the tree node template for expandable nodes -->
+
+
+  <mat-tree-node *matTreeNodeDef="let node; when: hasChild">
+    <li>
+      <div class="mat-tree-node">
+        <button class="btn" mat-icon-button matTreeNodeToggle
+                [attr.aria-label]="'toggle ' + node.name">
+          <mat-icon class="mat-icon-rtl-mirror">
+            {{treeControl.isExpanded(node) ? 'chevron_right' : 'expand_more'}}
+          </mat-icon>
+        </button>
+             <mat-radio-button *ngIf="node.id != 0" [value]="node.id">{{node.name}} </mat-radio-button>
+             <span *ngIf="node.id == 0">{{node.name}} </span>
+
+      </div>
+      <ul [class.example-tree-invisible]="treeControl.isExpanded(node)">
+        <ng-container matTreeNodeOutlet></ng-container>
+      </ul>
+    </li>
+  </mat-tree-node>
+</mat-tree>
+
+
+</mat-radio-group>
+</div>
+
+<div>Le fichier selectionné est : {{favoriteFruit}}</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="doAction()" mat-flat-button color="warn">OK</button>
+    <button mat-button (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
+  </div>
+
+<!-- Copyright 2019 Google Inc. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->

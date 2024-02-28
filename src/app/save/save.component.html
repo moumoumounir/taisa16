@@ -1,0 +1,15 @@
+<form name="optOutForm">
+<h4>{{lable}} </h4>
+
+<div>
+        
+    <input type="text" #projectname  value="{{Description}}" /><br>
+    <input type="checkbox"  [(ngModel)]="reusable" [checked]="reusable" (change)="saveReusable($event)"  /><b>Save the pipeline as reusable</b><br>
+
+    <button type="submit" (click)="savePipeline(projectname.value)"  class="create-btn btn btn-primary "  >Save</button>
+    <button type="submit" (click)="clearAndReload()"  class="create-btn btn btn-primary "  >Concel</button>
+
+
+
+</div>
+</form>

@@ -1,0 +1,122 @@
+.config-field {
+    box-shadow: 2px 2px 5px 2px;
+    border: 2px #d9d9d9;
+    border-radius: 5px;
+    /*min-height: 50px;*/
+    margin: 0 auto;
+    padding: 15px 20px 20px;
+    display: block;
+    text-align: center;
+    /*height: 100%;*/
+   
+     /*background-color: #d0d0d0;
+    background-color: #8b82b8;*/
+    background-color: #dceff0;
+}
+.config-field1 {
+    box-shadow: 2px 2px 5px 2px;
+    border: 2px #d9d9d9;
+    border-radius: 5px;
+    /*min-height: 5px;*/
+    margin: 0 auto;
+    /*padding: 5px 20px 20px;*/
+    display: block;
+    text-align: center;
+    /*height: 10%;
+    background-color: #d0d0d0;*/
+}
+/* The container */
+.container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    font-size: 17px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border-radius: 5px;
+    border: 2px solid #dceff0;
+    padding: 5px; 
+}
+/* Hide the browser's default checkbox */
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 30px;
+    background-color: transparent;
+    border-right: 2px solid #5f7d8b;
+}
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+    background-color: #5f7d8b;
+}
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+    display: block;
+}
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+    left: calc(50% - 4px);
+    top: 50%;
+    width: 7px;
+    height: 10px;
+    border: solid white;
+    border-width: 0px 3px 2px 0;
+    transform: rotate(45deg) translate(-50%, -50%);
+}
+.input-file {
+    max-width: 100%;
+}
+.ng-valid label {
+    width: 100%;
+}
+.btn-config {
+    width: 100%;
+    background-color: #f27839;
+    border: 0;
+    border-radius: 8px;
+   /* width: 100%;
+    */
+   /* background: #f27839;
+    */
+    color: #fff;
+    font-weight: 500;
+    padding: 10px;
+}
+.info {
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    padding: 10px;
+
+}
+
+.invisible{
+    display: block;
+    visibility: hidden;
+    height: 0;
+    width: 0;
+}

@@ -1,0 +1,43 @@
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+      
+      <!-- Tabs Titles -->
+  
+      <!-- Icon -->
+      <div class="fadeIn first">
+        <img src="assets/taisaLogo.png" id="icon" alt="Self Analytique" />
+      </div>
+      <label id="self">Self Analytique</label>
+  
+      <!-- Login Form -->
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+        <div class="form-group">
+          <br>
+          <!--<label for="exampleInputEmail1">Email address</label><br>-->
+      
+          <input type="email"  id='login'  formControlName="email" placeholder="Enter email">
+          <small class="form-text text-muted"  *ngIf="loginForm.controls['email'].touched && loginForm.controls['email'].errors?.['required'] === true">
+              Please enter email address.!
+          </small>
+      
+          <small class="form-text text-muted" *ngIf="loginForm.controls['email'].touched && loginForm.controls['email'].errors?.['email']">
+            Email address not well formed.!
+          </small>
+        </div>
+        
+        <div class="form-group">
+          <!--<label for="exampleInputPassword1">Password</label><br>-->
+         
+          <input type="password" id='password' formControlName="password" placeholder="Password">
+        </div>
+        <input type="submit" class="fadeIn fourth btn btn-primary" routerLink='/choice'  [disabled]="!loginForm.valid" value="Log In">
+       <!--<button type="submit" class="btn btn-primary"  [disabled]="!loginForm.valid">Submit</button>--> 
+      </form>
+  
+      <!-- Remind Passowrd -->
+      <div id="formFooter">
+        <a class="underlineHover" href="#">Forgot Password?</a>
+      </div>
+  
+    </div>
+  </div>

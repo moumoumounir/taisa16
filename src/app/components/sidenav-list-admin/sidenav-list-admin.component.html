@@ -1,0 +1,36 @@
+<mat-nav-list>
+  <div *ngIf="page === 'Accueil'" class="active">
+    <a mat-list-item routerLink="/report">
+      <mat-icon>home</mat-icon> <span class="nav-caption">Accueil</span>
+    </a>
+  </div>
+  <div *ngIf="page != 'Accueil'">
+    <a mat-list-item routerLink="/report">
+      <mat-icon>home</mat-icon> <span class="nav-caption">Accueil</span>
+    </a>
+  </div>
+  <div *ngIf="page === 'ListDataObject'" class="active">
+    <a mat-list-item routerLink="/ListDataObject">
+      <mat-icon>settings</mat-icon><span class="nav-caption">Data Catalog</span>
+    </a>
+  </div>
+  <div *ngIf="page != 'ListDataObject'">
+    <a mat-list-item routerLink="/ListDataObject">
+      <mat-icon>settings</mat-icon><span class="nav-caption">Data Catalog</span>
+    </a>
+  </div>
+  <div *ngIf="page === 'ListUser'" class="active">
+    <a mat-list-item routerLink="/ListUser">
+      <mat-icon>settings</mat-icon
+      ><span class="nav-caption">Data Attributes</span>
+    </a>
+  </div>
+  <div *ngIf="page != 'ListUser'">
+    <a mat-list-item routerLink="/ListUser">
+      <mat-icon>settings</mat-icon
+      ><span class="nav-caption">Data Attributes</span>
+    </a>
+  </div>
+
+
+ </mat-nav-list>

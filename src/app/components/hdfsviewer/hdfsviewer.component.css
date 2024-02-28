@@ -1,0 +1,23 @@
+.mat-card-header .mat-card-title {
+    
+    color: black;
+}
+
+.mat-card{
+    margin-bottom: 5px;
+    cursor: pointer;
+    background-color: #c0c0c0;
+    
+}
+
+.list-container
+{
+    overflow-y: auto;
+    height: 347px;
+   
+}
+
+.btn-replace
+{
+    margin-right: 3px;
+}

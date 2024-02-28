@@ -1,0 +1,255 @@
+<div class="config-field ">
+    <form [formGroup]="myFormGroup" (ngSubmit)="onSubmit()">
+        
+        <label>
+            <h6> Projet:{{ projet_name }} </h6>
+        </label>
+        <BR>
+        <div *ngIf="formInput.length>0">
+            <label *ngIf="!(currentModule=='upload')">
+                <h6>Module ID :{{ currentModule }} </h6>
+            </label>
+            <label *ngIf="currentModule=='upload'">
+                <br>
+            <h6>Upload File To Server </h6>
+            </label>
+            <button *ngIf="currentAction=='Impala' " type="button" matTooltip="Add To filter " class="btn btn-default" (click)="AddToQueryFilter()">
+                <mat-icon style="margin-top: 10%;color:yellow">add</mat-icon>
+            </button> 
+             
+            <mat-radio-group *ngIf="currentAction=='Impala' || currentAction=='ImpalaMerge'"  formControlName="andOrOptions" name="choice" aria-label="Label">
+                <mat-radio-button value=" AND " checked=true>AND </mat-radio-button>
+                <mat-radio-button value=" OR ">OR </mat-radio-button>
+
+    </mat-radio-group>
+    
+    
+        <div *ngFor="let form_elem of formInput ">
+                      
+                <div *ngIf="form_elem.type=='textarea'">
+                <button *ngIf=" currentAction=='ImpalaAgg'  " type="button" matTooltip="Add To Agg " class="btn btn-default" (click)="AddToQueryAgg()">
+                        <mat-icon style="margin-top: 10%;color:yellow">add</mat-icon>
+                </button>
+
+                <button *ngIf=" currentAction=='ImpalaAgg' " type="button" matTooltip="Clear Agg " class="btn btn-default" (click)="clearAgg()">
+                    <mat-icon style="margin-top: 10%;color:yellow">delete_forever</mat-icon>
+                </button>
+                <button *ngIf="  currentAction=='ImpalaMerge'" type="button" matTooltip="Add To Condition" class="btn btn-default" (click)="AddToQueryMerge()">
+                    <mat-icon style="margin-top: 10%;color:yellow">add</mat-icon>
+                </button>
+
+                <button *ngIf="  currentAction=='ImpalaMerge'" type="button" matTooltip="Clear Agg " class="btn btn-default" (click)="clearAgg()">
+                    <mat-icon style="margin-top: 10%;color:yellow">delete_forever</mat-icon>
+                </button>
+                    <div>
+                    <label><b>{{form_elem.label}}</b> <img  class="info" (click)="showHelp(form_elem.help)" src="assets/info.png" />
+                  </label>
+                    </div>
+                  <div>
+                    <textarea  class="form-control" rows="8" cols="35"  spellcheck="false" style="font-size: 10px;" formControlName="{{form_elem.label}}" > 
+                    </textarea>
+                     </div>
+                     <div style="color: red;font-size: smaller;"  *ngIf="myFormGroup.get(form_elem.label)?.errors"> {{myFormGroup.get(form_elem.label)?.errors?.['invalidQuery']}}</div>
+                    
+                    <!-- span style="color: red;"  *ngIf="myFormGroup.get(form_elem.label)?.errors?.invalidQuery">
+                     {{form_elem.label}} is invalid </span -->
+                
+                </div>
+                <div *ngIf="form_elem.type=='password'">
+                    <label><b>{{form_elem.label}}</b> <img  class="info" (click)="showHelp(form_elem.help)" src="assets/info.png" /></label>
+                    <input type="password" formControlName="{{form_elem.label}}" />
+                </div>
+                <!--div *ngIf="form_elem.type=='file'">
+                     <br>
+                    <button type="button"  formControlName="{{form_elem.label}}" id="file" matTooltip="select file" class="btn btn-default" (click)="openFolderModal()">
+                        <mat-icon>folder</mat-icon>Parcourir ...
+                    </button>
+                </div -->
+                <div *ngIf="form_elem.type=='uploadfile'">
+                   <BR>
+                    <h6>Select File From Local</h6>
+ 
+                    <input   formControlName="{{form_elem.label}}" type="file" id="file"  (change)='onFileChanged($event)' />
+                    
+                </div>
+
+                <!--div *ngIf="form_elem.type=='text1'">         
+                    <br> <div>             
+                    <button  type="button" matTooltip="select file" class="btn btn-default" (click)="openFolderModal()">
+                        <mat-icon style="margin-top: 10%;color:yellow">folder</mat-icon>
+                    </button>  
+                    <label *ngIf="myFormGroup.get(form_elem.label)"  style="width: 50%; align-items: flex-start;"><b>{{form_elem.label}}</b> </label>    
+                </div>
+                    <input *ngIf="myFormGroup.get(form_elem.label)"   type="text" formControlName="{{form_elem.label}}"  />
+                    <span style="color: red;"  *ngIf="myFormGroup.get(form_elem.label)?.errors?.['required']">  {{form_elem.label}} is required </span>
+               </div -->
+               
+               <div *ngIf="form_elem.type=='multiFileServer'">
+                   
+                <br>             
+                     <div>
+                     <button  type="button" matTooltip="select file" class="btn btn-default" (click)="openMultiFolderServerModal(form_elem)">
+                         <mat-icon style="margin-top: 10%;color:yellow">folder</mat-icon>
+                     </button>  
+                     <label *ngIf="myFormGroup.get(form_elem.label)"  style="width: 50%; align-items: flex-start;"><b>{{form_elem.label}}</b> </label>
+                    </div>
+                    <div>
+                     <input *ngIf="myFormGroup.get(form_elem.label)"   type="text" formControlName="{{form_elem.label}}"  />
+                     <img *ngIf="form_elem.help!=undefined" class="info" (click)="showHelp(form_elem.help)" src="assets/info.png" />
+ 
+                    </div>
+                     <div style="color: red;"  *ngIf="myFormGroup.get(form_elem.label)?.errors?.['required']">  {{form_elem.label}} is required</div>
+  
+                 </div>
+ 
+
+               <div  *ngIf="form_elem.type=='fileServer'">        
+                <br> 
+                     <div>                     
+                     <button  type="button" matTooltip="select file" class="btn btn-default" (click)="openFolderServerModal(form_elem)">
+                         <mat-icon style="margin-top: 10%;color:yellow">folder</mat-icon>
+                     </button>  
+                     <label *ngIf="myFormGroup.get(form_elem.label)"  style="width: 50%; align-items: flex-start;"><b>{{form_elem.label}}</b> </label>
+                    </div> 
+                     <div>
+                     <input *ngIf="myFormGroup.get(form_elem.label)"   type="text" formControlName="{{form_elem.label}}"  />
+                     </div>
+                     <div  style="color: red;"  *ngIf="myFormGroup.get(form_elem.label)?.errors?.['required']">  {{form_elem.label}} is required</div>
+  
+                 </div>
+ 
+
+ 
+                <div *ngIf="form_elem.type=='ML_file'">
+                   
+                    <br> <div>             
+                    
+                    <button  type="button" matTooltip="select file" class="btn btn-default" (click)="openFolderServerModal(form_elem)">
+                        <mat-icon style="margin-top: 10%;color:yellow">folder</mat-icon>
+                    </button>  
+                    <label *ngIf="myFormGroup.get(form_elem.label)"  style="width: 50%; align-items: flex-start;"><b>{{form_elem.label}}</b> </label>
+                   
+                </div>
+                    <input *ngIf="myFormGroup.get(form_elem.label)"   type="text" formControlName="{{form_elem.label}}"  />
+                 </div>
+                    <!--div style="color: red;"  *ngIf="myFormGroup.get(form_elem.label)?.errors?.['required']">  {{form_elem.label}} is required </div -->
+ 
+             
+                <div *ngIf="form_elem.type=='Module_file'">
+                   
+                    <br> <div>             
+                    
+                    <button  type="button" matTooltip="select file" class="btn btn-default" (click)="openFolderServerModal(form_elem)">
+                        <mat-icon style="margin-top: 10%;color:yellow">folder</mat-icon>
+                    </button>  
+                    <label *ngIf="myFormGroup.get(form_elem.label)"  style="width: 50%; align-items: flex-start;"><b>{{form_elem.label}}</b> </label>
+                   
+                </div>
+                    <input *ngIf="myFormGroup.get(form_elem.label)"   type="text" formControlName="{{form_elem.label}}"  />
+                    <span style="color: red;"  *ngIf="myFormGroup.get(form_elem.label)?.errors?.['required']">  {{form_elem.label}} is required </span>
+ 
+                </div>
+
+                <div *ngIf="form_elem.type=='folder'">
+                 
+                    <h4 for="file">File  {{form_elem.value}}</h4>
+                    <!-- input type="file" id="filepicker" name="fileList" webkitdirectory multiple /  -->
+
+                    <input   formControlName="{{form_elem.label}}" type="file" id="file"  (change)='onFolderChanged($event)' webkitdirectory mozdirectory msdirectory odirectory directory />
+                    <br>
+                    <h6  style="font-size: 15px; font-style: italic; font-family: cursive;"><ul> <li *ngFor="let book of csvFolder">{{ book }}</li></ul> </h6>
+
+                </div>
+
+
+
+
+                <div *ngIf="form_elem.type=='text'">
+                    <br>  
+                    <div>
+                        <input matInput [matDatepicker]="picker" class="invisible" (dateChange)="pickerEvent($event)">
+                        <mat-datepicker-toggle *ngIf="currentAction=='Impala' && FilterColumnType " matSuffix [for]="picker">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </div>
+                    <div>
+                        <label *ngIf="myFormGroup.get(form_elem.label)"  style="width: 50%; align-items: flex-start;"><b>{{form_elem.label}}</b> 
+                          </label>
+                        <img *ngIf="form_elem.help!=undefined" class="info" (click)="showHelp(form_elem.help)" src="assets/info.png" />
+
+                       
+                    </div>
+
+                    <div>
+                        <input *ngIf="myFormGroup.get(form_elem.label)" type="text" formControlName="{{form_elem.label}}" />
+                                           </div>
+                    <div style="color: red;"  *ngIf="myFormGroup.get(form_elem.label)?.errors?.['required']">  {{form_elem.label}} is required </div>
+ 
+                    <br>
+
+                </div>
+                <div *ngIf="form_elem.type=='select'">
+                    <br>               
+                    <!--select  formControlName="{{form_elem.label}}">
+                        <option value="" disabled selected>Select your option</option>
+                        <option  *ngFor="let col of echangeData.data" [ngValue]={{col.column}}>  
+                            {{col.column}}
+                        </option>
+                     </select  -->
+                     <div>
+                     <label *ngIf="myFormGroup.get(form_elem.label)" ><b>{{form_elem.label}}</b> 
+                     <img *ngIf="form_elem.help!=undefined" class="info" (click)="showHelp(form_elem.help)" src="assets/info.png" />
+                    </label>
+                    </div>
+                    <div>
+                     <select class="form-select" (change)="SelectOnChange($event,form_elem.paramValue)" formControlName="{{form_elem.label}}" >
+                        <option value="" disabled selected>Select your option</option>
+                        <option *ngFor="let item of form_elem.paramValue" [ngValue]="item">
+                          {{item}}
+                        </option>
+                     </select>
+                    </div>
+                </div>
+                <div *ngIf="form_elem.type=='selectMultiple'">
+                    <label *ngIf="myFormGroup.get(form_elem.label)" ><b>{{form_elem.label}}</b> </label>
+                        <mat-select class="form-select" formControlName="{{form_elem.label}}"  multiple (ngModelChange)="onElementSelection($event)">
+                          <mat-option *ngFor="let topping of form_elem.paramValue" [value]="topping">{{topping}}</mat-option>
+                        </mat-select>
+                    </div>
+                 <div *ngIf="form_elem.type=='checkbox1'">
+                <input type="checkbox" formControlName="{{form_elem.label}}"  
+                value="{{form_elem.value}}" (change)=onCheckChanges($event)/>  {{form_elem.label}}
+                </div>
+                <div *ngIf="form_elem.type=='checkbox'">
+                        <!--div *ngIf="form_elem.label=='next'">
+                        <h4>Choose next blocks <img  class="info" (click)="showHelp(form_elem.help)" src="assets/info.png" /></h4 -->
+ 
+                        <label *ngIf="myFormGroup.get(form_elem.label)" ><b>{{form_elem.label}}</b> </label>
+                        <div *ngFor="let block of form_elem.paramValue">
+                                     <input type="checkbox" value="{{block}}"  formControlName="{{form_elem.label}}"
+                                     (change)=onCheckChangesNext($event) />{{block}}
+
+                        </div>
+                 </div >
+
+                <div *ngIf="form_elem.type=='selection'">
+                    <div *ngIf="form_elem.label=='Reusable_Pipeline'">
+                        <h4>Choose Pipeline  <img  class="info" (click)="showHelp(form_elem.help)" src="assets/info.png" /></h4>
+                        <select   formControlName="Reusable_Pipeline">
+                            <option [ngValue]="null" disabled>Choose your pipeline</option>
+                            <option  *ngFor="let module of listReusable" [ngValue]="module" (change)='onColumnChange(module)'
+                             >{{module}}</option>
+                        </select>
+    
+                    </div>
+
+                </div>
+
+        </div>
+        <BR>
+     
+        <input *ngIf="formInput.length>0 "  type="submit" id="test" class="btn btn-config " value="{{submitLabel}}"  [disabled]="!myFormGroup.valid">
+      </div>
+    </form>
+
+</div>

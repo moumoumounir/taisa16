@@ -1,0 +1,43 @@
+<form [formGroup]="form" novalidate>  
+    <label id="example-radio-group-label">Selectionner Un Fichier </label>
+    <div   style="height: 80vh;overflow-y: auto;" fxLayout="row wrap" fxLayoutGap="15px" fxLayoutAlign="flex-start">
+      
+       
+      <!--mat-radio-group  [(ngModel)]="favoriteFruit" -->
+      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+        <!-- This is the tree node template for leaf nodes -->
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+          <!-- use a disabled button to provide padding for tree leaf -->
+          <button mat-icon-button disabled></button>
+          <!--mat-radio-button [value]="node.name">{{node.name}} </mat-radio-button -->
+          <!--mat-checkbox *ngFor="let item of items" [checked]="form.get('items')?.value.includes(item)"
+          (change)="toggleItem(item)">{{ item }}</mat-checkbox -->
+    
+          <mat-checkbox  [checked]="false"
+          (change)="toggleItem(node.name)">{{ node.name}} | {{ node.time}} | {{node.size}} </mat-checkbox>
+    
+    
+        </mat-tree-node>
+        <!-- This is the tree node template for expandable nodes -->
+        <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+          <button mat-icon-button matTreeNodeToggle
+                  [attr.aria-label]="'Toggle ' + node.name">
+            <mat-icon class="mat-icon-rtl-mirror">
+              {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+          </button>
+          <span>  {{node.name}} </span>
+    
+          
+        </mat-tree-node>
+      </mat-tree>
+    <!--/mat-radio-group  -->
+    
+    </div>
+    <div>Le fichier selectionné est : {{form.value|json}}</div>
+    <div mat-dialog-actions>
+        <button mat-button (click)="doAction()" mat-flat-button color="warn">OK</button>
+        <button mat-button (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
+      </div>
+      </form>
+      

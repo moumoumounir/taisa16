@@ -1,0 +1,304 @@
+<div  fxFlex> 
+    <div class="container-fluid" >
+      <nav class="navbar">
+        <button  class="button_logo" (click)="sidenav.toggle()">
+          <img title="logo"  src="assets/logoAnalytics.png" id='navImg'></button>
+          <b id="lbwork">Self Analytique</b>
+          <span class="example-spacer"></span> 
+          
+          <button matTooltip="workSpace" class="btn btn-project"  routerLink="/workspace">
+            <mat-icon class="person">home</mat-icon>
+          </button>
+          
+          <button matTooltip="{{user}}" class="btn btn-project"  routerLink="/user-login">
+            <mat-icon class="person">person</mat-icon>
+          </button>
+        <button matTooltip="Logout" class="btn btn-project" (click)="logout()">
+          <mat-icon class="person">logout</mat-icon>
+        </button>
+          
+      
+      </nav>
+    </div>
+    <!--app-login-user></app-login-user -->
+    
+    <mat-sidenav-container>
+    <mat-sidenav #sidenav role="navigation">
+      <app-navbar (sidenavClose)="navActionHandler($event);sidenav.close()" mode="side"></app-navbar>
+    
+    </mat-sidenav>
+    
+    <mat-sidenav-content>
+    
+    
+    <div class="row main" >
+     
+      <div class="col-2 drop-section"> 
+        <form [formGroup]="plateformForm">
+        <mat-radio-group  formControlName="plateform" [disabled]="shipsInBoard.length>0" (change)="onPlateformChange($event)"  aria-label="Label">
+        <mat-radio-button value="Python" checked=true>Python </mat-radio-button>
+        <mat-radio-button value="SQL"> SQL </mat-radio-button>
+  
+  </mat-radio-group> 
+  </form>
+          <mat-card class="mat-card-class"> 
+              <mat-card-title class="type-class">             
+              <mat-icon>folder</mat-icon> Input   
+              </mat-card-title>
+          <mat-divider></mat-divider>
+          <mat-card-content>
+            <div   cdkDropList #todoList="cdkDropList" [cdkDropListData]="moduleInput" [cdkDropListConnectedTo]="[cdkBoard]">
+          
+              <div   style="overflow-y: auto;" fxLayout="row wrap" fxLayoutGap="15px" fxLayoutAlign="flex-start">
+                <ng-container *ngFor="let module of moduleInput">
+                       <img  [src]="module.img !== undefined ? module.img : 'assets/imgInput1.png'" class="icon-class" matTooltip="{{module.name}}"  inline cdkDrag  />
+                     </ng-container>
+              </div>
+          
+           
+            </div>
+          
+          </mat-card-content>
+          </mat-card>
+          <mat-card class="mat-card-class" >
+          <mat-card-title class="type-class">
+               <mat-icon>settings</mat-icon >Treatement    
+          </mat-card-title>
+          <mat-divider></mat-divider>    
+          <mat-card-content>
+            <div  cdkDropList #todoList="cdkDropList" [cdkDropListData]="moduletreat" [cdkDropListConnectedTo]="[cdkBoard]">       
+              <div fxLayout="row wrap" fxLayoutGap="15px" fxLayoutAlign="flex-start">
+                <ng-container *ngFor="let module of moduletreat">
+                        <img  [src]="module.img !== undefined ? module.img : shitImage" class="icon-class" matTooltip="{{module.name}}"  inline cdkDrag  />
+    
+                </ng-container>
+              </div>
+            </div>      
+          </mat-card-content>
+          </mat-card>
+          <mat-card class="mat-card-class"> 
+            <mat-card-title class="type-class">             
+            <mat-icon>mail</mat-icon> Sending   
+            </mat-card-title>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+          <div   cdkDropList #todoList="cdkDropList" [cdkDropListData]="moduleSending" [cdkDropListConnectedTo]="[cdkBoard]">
+        
+            <div   style="overflow-y: auto;" fxLayout="row wrap" fxLayoutGap="15px" fxLayoutAlign="flex-start">
+              <ng-container *ngFor="let module of moduleSending">
+                     <img  [src]="module.img !== undefined ? module.img : 'assets/imgInput1.png'" class="icon-class" matTooltip="{{module.name}}"  inline cdkDrag  />
+                   </ng-container>
+            </div>
+        
+         
+          </div>
+        
+        </mat-card-content>
+        </mat-card>
+  
+          <mat-card class="mat-card-class" >
+            <mat-card-title class="type-class">
+                 <mat-icon>warning</mat-icon >Debug    
+            </mat-card-title>
+            <mat-divider></mat-divider>    
+            <mat-card-content>
+              <div  cdkDropList #todoList="cdkDropList" [cdkDropListData]="moduleDebug" [cdkDropListConnectedTo]="[cdkBoard]">       
+                <div fxLayout="row wrap" fxLayoutGap="15px" fxLayoutAlign="flex-start">
+                  <ng-container *ngFor="let module of moduleDebug">
+                      <img  [src]="module.img !== undefined ? module.img : shitImage" class="icon-class" matTooltip="{{module.name}}"  inline cdkDrag  />
+      
+                  </ng-container>
+                </div>
+              </div>      
+            </mat-card-content>
+            </mat-card>
+          
+          <mat-card class="mat-card-class">
+          <mat-card-title class="type-class">      
+              <mat-icon>move_to_inbox</mat-icon>Output     
+          </mat-card-title>
+          <mat-divider></mat-divider>     
+          <mat-card-content>
+            <div   cdkDropList #todoList="cdkDropList" [cdkDropListData]="moduleOutput" [cdkDropListConnectedTo]="[cdkBoard]">        
+              <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="flex-start">
+                <ng-container  *ngFor="let module of moduleOutput">
+                       <img  [src]="module.img !== undefined ? module.img : shitImage" class="icon-class" matTooltip="{{module.name}}"  inline cdkDrag  />
+                      </ng-container>
+              </div>
+          
+          
+            </div>
+          
+          </mat-card-content>
+          </mat-card>
+             
+     
+      </div>
+     
+      <div  class="{{!showConf ? 'drop-section col-10':'drop-section col-7' }}" > 
+        
+          <div class="row button-container " *ngIf="shipsInBoard.length>=0 " style="align-self: center;">
+              <div class="col-1">
+        <button *ngIf="!showConf"  mat-button (click)="showModule=false">{{extend}}</button>
+        <button *ngIf="showConf"  mat-button (click)="restaureModulePanel()">{{reduce}}</button>
+        </div>
+            <div class="col-2">
+                    <button *ngIf="activeSaveFlag()" matTooltip="Save Project" class="btn btn-project" (click)="saveProjectServeur()">
+                    <mat-icon style="margin-top: 10%;color:white">save</mat-icon>
+                  </button>
+                  <button *ngIf="isLastShipHasNext() && paletteBar && shipsInBoard.length>0" matTooltip="Delete Project" class="btn btn-project" (click)="deleteElement(1)">
+                    <mat-icon style="margin-top: 10%;color:red">delete_forever</mat-icon>
+                  </button>
+                  </div>
+               
+                  <div class="col-4">
+                    <div *ngIf="echangeData.data.length==0 &&  ( selectedButton=='run' || this.selectedButton == 'plot')" class="wrapper" style="height: 50px; align-self:center;" >
+                        <br>    
+                        <mat-progress-bar mode="indeterminate"></mat-progress-bar>                  
+                    </div>
+                    <div *ngIf="echangeData.data.length>0 && exceptionCode==1 &&  selectedButton=='run' ">
+                      <h6 style="color: red;">Error : {{echangeData.data.length}}</h6>
+                      </div>
+                    <div *ngIf="exceptionCode==0 &&  echangeData.data.length>0 &&  selectedButton=='run' ">
+                    <h6>count : {{echangeData.data.length}}</h6>
+                    </div>
+                </div>
+              <div class="col-2"  >
+                <div *ngIf="shipsInBoard.length> 0">
+                <button  *ngIf="!isValidPlot()" matTooltip="Run Project" class="btn" (click)="showDf()">
+                  <mat-icon style="margin-top: 15%;color:green">play_arrow</mat-icon>
+                </button>
+                <button matTooltip="View Code" class="btn btn-project" (click)="showCode()">
+                  <mat-icon style="margin-top: 15%;">developer_mode</mat-icon>
+                </button>
+                <button *ngIf="isValidPlot()" matTooltip="Generate Plot" class="btn btn-project"
+                  (click)='showPlot()'>
+                  <mat-icon style="margin-top: 15%;color:green">show_chart</mat-icon>
+                </button>
+               </div>
+              </div>
+                  <div class="col-2">
+                    <div *ngIf="paletteBar">
+                      <button matTooltip="Save Project" class="btn" (click)='link()'>
+                        <mat-icon style="margin-top: 15%;color:white">link</mat-icon>
+                      </button>
+                      <button matTooltip="Show Graph" class="btn" (click)="deleteElement(0)">
+                        <mat-icon style="margin-top: 15%;color:red">link_off</mat-icon>
+                      </button>
+                      <button matTooltip="Delete Project" class="btn  btn-config" (click)="confFieldModule()">
+                        <mat-icon style="margin-top: 15%;color:blue">settings</mat-icon>
+                      </button>
+                    </div>
+              
+             <!--span class="example-spacer"></span --> 
+            </div>
+            <div class="col-1">
+            <button *ngIf="showConf" class="close-button" mat-button (click)="showConf=false">{{extend}}</button>
+            <button *ngIf="!showConf" class="close" mat-button (click)="restaureConfPanel()">{{reduce}}</button>
+           
+              </div>
+                 </div>
+        <hr>  
+            <div style="overflow-y: auto;overflow-x: hidden;">   
+              <div cdkDropList #cdkBoard=cdkDropList [cdkDropListData]="shipsInBoard" [cdkDropListConnectedTo]="[todoList]"
+                    style="position:relative;height: 300px;" (cdkDropListDropped)="drop($event)" cdkDropListSortingDisabled="true" 
+                     >
+                    <ng-container *ngFor="let ship of shipsInBoard"  >
+                        <div style="position:absolute" [style.top]="ship.top+'px'" [style.left]="ship.left+'px'" cdkDrag>
+                            <app-ship [name]="ship.name" [size]="ship.size" [color]="ship.color" [imgSource]="ship.img !== undefined ? ship.img : shitImage" (mousedown)="onMouseDown(ship)"
+                                (dblclick)="doubleClickFunction(ship)"></app-ship>
+                            <div *cdkDragPlaceholder></div>
+                        </div>
+                    </ng-container>
+                   
+                    <div *ngIf="arrowFlag">
+                        <ng-container>
+                            <svg style="position:absolute; left:0; top:0;" [attr.width]="gridWith" [attr.height]="gridLarge">
+                                <line *ngFor="let line of narrowArray;let i=index" class="line" [attr.x1]="line.x1" [attr.y1]="line.y1"
+                                    [attr.x2]="line.x2" [attr.y2]="line.y2" stroke="black" stroke-width="3"
+                                    marker-end="url(#triangle)" />
+                                <circle *ngFor="let cercle of cercleArray" class="donut-ring" [attr.cx]="cercle.x" [attr.cy]="cercle.y"
+                                    r="4" fill="black" stroke="black" stroke-width="3" />
+    
+                                <line *ngFor="let line of narArray;let i=index" class="line" [attr.x1]="line.p0.x" [attr.y1]="line.p0.y"
+                                    [attr.x2]="line.p1.x" [attr.y2]="line.p1.y" stroke="black" stroke-width="3"
+                                    marker-end="url(#triangle)" />
+                                <line *ngFor="let line of narArray;let i=index" class="line" [attr.x1]="line.p0.x" [attr.y1]="line.p0.y"
+                                    [attr.x2]="line.p2.x" [attr.y2]="line.p2.y" stroke="black" stroke-width="3"
+                                    marker-end="url(#triangle)" />
+    
+            
+                            </svg>
+                        </ng-container>
+    
+                    </div>
+                     <div class="row"   *ngFor="let row of board;let i=index" >
+                        <div class="cell" *ngFor="let box of row;let j=index" id='columns'>
+                            <button #bt mat-button class="bt-cell" (click)="clearSelect()"
+                                (mouseover)="position=bt.getBoundingClientRect()"></button>
+                            
+                        </div>
+                     </div>  
+              </div>
+      
+            </div>
+    <!--                       -->
+  
+    <div *ngIf="statDataDf.length>0"  class="scroll-container" style="overflow: auto">
+    <table>
+      <ng-container >   
+          <tr>
+            <th *ngFor="let number of statDataDf" style="text-align: center;min-width: 150px;">
+            {{number.title}}</th></tr>
+          <tr style="min-width: 100px;text-align:top;">
+            <td *ngFor="let number of statDataDf" style="text-align: center;text-align:top;"><!--/td> *ngIf="number.labels.length>0" -->
+            <div  *ngIf="number.labels.length==10000">
+              {{number.labels}}
+              {{number.data[0].data}}
+            </div>
+         <app-pie-graph  *ngIf="number.labels.length>=1" [columnsStatData]=number></app-pie-graph>
+           
+          </td></tr>
+      </ng-container>
+  </table>
+  </div>
+    <!--                                   -->
+     <br>
+    <div *ngIf="echangeData.data.length>0 &&  selectedButton=='run' ">
+      <app-table-fil-sort-pag [echangeData]="echangeData"  (countChanged)="actionHandler1($event)"></app-table-fil-sort-pag> 
+    </div>
+    
+       <br>
+       </div>
+    
+      <div *ngIf="showConf" style="align-items: center;" class="{{!showConf ? 'drop-section col-0':'drop-section col-3' }}"   >
+        <div class="row" style="height: 100%;">
+          <div *ngIf="spinerSelectedField" class="wrapper" style="height: 20px; align-self:center;">
+            <mat-progress-spinner style="left: 50%;" class="inner" mode="indeterminate"  diameter="40"></mat-progress-spinner>
+                          
+          </div>  
+          <div>
+            <app-config style="margin-bottom: 5px;" *ngIf="showChild"  [message] = 'message' [modules] ='modules'  (countChanged)="validateConfigField($event)"></app-config>
+            </div> 
+            <div>    
+              <div  style="overflow-y: auto; margin-top: 15px;" *ngIf="selectedButton=='conf'  && goConfElement() ">
+                  <app-select-column-fram [echangeData]="echangeDataConf"  (countChanged)="actionHandler($event)"></app-select-column-fram> 
+              </div>
+      </div>
+    </div>
+    
+      </div>
+    </div>
+    
+    
+    <nav class="nav-bar" style="height: 50px;">
+          <b id="lbwork">Contact :  </b>
+    </nav>
+    
+    
+    
+    </mat-sidenav-content>
+    </mat-sidenav-container>
+    </div>
+    
+    

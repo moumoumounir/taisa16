@@ -1,0 +1,41 @@
+<mat-toolbar color="primary"  style="height: auto;"> 
+  <mat-toolbar-row>
+    <div fxShow="true" fxHide.gt-sm="true">
+      <!-- a  routerLink="/" -->
+      <a (click)="onToggleSidenav()">  
+        <img  src="assets/DAK_LOGO.png" height="70px" style="padding-left: 5px;padding-right: 50px;"/> 
+       </a>
+    </div>
+  <div>
+  <a  routerLink="/">DAK : Data ACCEES KEY  </a>
+</div>
+ <span class="example-spacer"></span>
+
+ <div fxShow="true" fxHide.lt-md="true">              
+      <span class="example-spacer"></span>
+    <a  routerLink="/report"  style="padding-left: 10px;">
+      <span   matBadgeColor="warn" class="material-icons" matTooltip="{{getMoreInformation()}}" matTooltipClass="{{request}} demande(s) ">persone</span>
+  
+      <span style="font-size: small;">{{user}}</span>
+ </a> 
+ &nbsp;&nbsp;
+ <a  routerLink="/ListTask">
+ <span *ngIf="task > 0" matBadge={{task}} matBadgeSize="small" matBadgeColor="warn" class="material-icons" matTooltip="{{notif}} approve waiting" matTooltipClass="my-tooltip" >task</span>
+ <span *ngIf="task === 0"  class="material-icons" style="margin-right:0px !important;color:black;">task</span>
+ </a> 
+      &nbsp;&nbsp;
+        <a  routerLink="/ListApproval">
+        <span *ngIf="notif > 0" matBadge={{notif}} matBadgeSize="small" matBadgeColor="warn" class="material-icons" matTooltip="{{notif}} approve waiting" matTooltipClass="my-tooltip" >notifications</span>
+        <span *ngIf="notif === 0"  class="material-icons" style="margin-right:0px !important;color:black;">notifications</span>
+        </a>  
+        &nbsp;&nbsp;
+        <a  routerLink="/requestlist">
+          <span *ngIf="request > 0"  matBadge={{request}} matBadgeSize="small"  class="material-icons"  >shopping_cart</span>
+          <span *ngIf="request === 0"  class="material-icons" style="margin-right:0px !important;color:black;">shopping_cart</span>
+          </a>  
+   <a  (click)="logout()" style="font-size: smaller;padding-left: 10px;"><span class="material-icons"  matTooltip="Déconnexion" >logout</span></a>
+     
+ </div>
+</mat-toolbar-row> 
+</mat-toolbar>
+ 

@@ -1,0 +1,13 @@
+{"TitleFormObject":"Data Set Details",
+    "form":{
+    "Ref_Object": {"type":"text","label":"Ref Object","value":"","diseable": "1" },
+	"Short_Description": {"type":"text","label":"Short Description","value":"","diseable": "1"  ,"required":"1"  },
+    "Type": {"type":"select","label":"Type","value":"DB","paramValue": ["","DB","Table Details","Table KPI"],"diseable": "1" },
+    "Parent": {"type":"select","label":"Parent","value":"BI","paramValue": ["","SI","Data","BI","BIProd","BiReport","DBDMC" ],"diseable": "1"  },
+    "Data_Owner": {"type":"text","label":"Data Owner","value":"","diseable": "1"  },
+    "Long_Description": {"type":"textarea","label":"Long Description","value":""   }
+},
+"displayedColumns" : [	"Ref_Object", 	"Short_Description"],
+"actionColumns" :["Select", "details", "action", "delete","Add"],
+"titleList":"Data Object List "
+} 

@@ -1,0 +1,39 @@
+
+
+
+<!--<div *ngFor="let repo of repos">
+    <b>{{repo.path}}</b>
+</div>-->
+<div>
+    <button  class="btn btn-success" (click)="createRepo(currentRepo)" >Create Repository</button>
+   
+      
+</div>
+<div>
+    <h4>HDFS Repositories for <b>{{currentRepo}}</b></h4>
+</div>
+<div class="list-container">
+    <mat-card *ngFor="let repo of repos" class="module " >
+        <!--class="module"  >-->
+         <mat-card-header >
+             <div class="col-md-8 col-sm-8">
+                <mat-card-title  (click)="getRepo(repo.path)" ><b>{{repo.path}}</b></mat-card-title>
+             </div>
+        
+           <div class='col-md-4 col-sm-4'>
+            <button class="btn btn-success btn-replace" (click)='openToLocal(repo.path)'> Copy to Local</button>
+            <button class="btn btn-danger"> Delete</button>
+        </div>
+           
+           <!--<mat-card-subtitle>{{todo.category}}</mat-card-subtitle>-->
+         </mat-card-header>
+        </mat-card>
+        
+                
+
+</div>
+
+
+
+
+

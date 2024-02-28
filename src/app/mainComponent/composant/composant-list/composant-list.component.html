@@ -1,0 +1,57 @@
+<!-- app-data-user></app-data-user -->
+<app-layout>
+  <app-navbar-user
+    (sidenavToggle)="sidenav.toggle()"
+    mode="side"
+  ></app-navbar-user>
+  <hr />
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" opened="true">
+      <!--app-sidenav-list (sidenavClose)="sidenav.close()" mode="side"></app-sidenav-list -->
+      <app-sidenav-list-admin
+        (sidenavClose)="sidenav.close()"
+        mode="side"
+      ></app-sidenav-list-admin>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <main  style="overflow:scroll;height: 700px;">
+        <div class="container">
+          <div
+            *ngIf="spinerSelectedField"
+            class="wrapper"
+            style="padding-top: 200px; height: 20px; align-self: center"
+          >
+            <mat-progress-spinner
+              style="left: 50%"
+              class="inner"
+              mode="indeterminate"
+              diameter="40"
+            ></mat-progress-spinner>
+          </div>
+          <div *ngIf="echangeData.data.length > 0 && action === 'list'" class="row">
+            <legend>
+              <h3>{{title}}</h3>
+            </legend>
+            <app-dynamic-table-list
+              [echangeData]="echangeData"
+              (countChanged)="actionHandler1($event)"
+            >
+            </app-dynamic-table-list>
+          </div>
+
+          <div *ngIf="action == 'add' || action == 'details' || action == 'update' " >
+            <app-composant-crud
+              [echangeObject]="crudData"
+              (countChanged)="reloadData($event)"
+            ></app-composant-crud>
+          </div>
+
+          <div *ngIf="action == ''" style="text-align: center">
+            <BR /><BR />
+            <h2>No Data To Display</h2>
+          </div>
+        </div>
+      </main>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</app-layout>

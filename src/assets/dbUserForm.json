@@ -1,0 +1,28 @@
+{"form":{
+    "Prenom"	:{"type":"text","label":"Prenom","value":""	,"disabled":false},	
+    "Nom"		:{"type":"text","label":"Nom","value":""	 	,"disabled":false},
+    "Ref"		:{"type":"text","label":"Ref","value":""	 	,"disabled":false},
+	
+    "Email"		:{"type":"text","label":"Email","value":""	,"disabled":false},	
+     
+    "Phone"		:{"type":"text","label":"Phone","value":""	,"disabled":false}
+},
+"formChangePassword":{
+    "Prenom"	:{"type":"text","label":"Prenom","value":""	,"disabled":true},	
+    "Nom"		:{"type":"text","label":"Nom","value":""	 	,"disabled":true},
+    "Ref"		:{"type":"text","label":"Ref","value":""	 	,"disabled":true},
+	
+    "Email"		:{"type":"text","label":"Email","value":""	,"disabled":true},
+    "Password"	:{"type":"password","label":"Password","value":""	,"disabled":false},	
+     
+    "Phone"		:{"type":"text","label":"Phone","value":""	,"disabled":true}
+},
+
+
+"TitleFormObject":"User Details",
+"TitleFormChangePassword":"User Details : Change Password",
+"displayedColumns" : [	"Ref", 	"Prenom","Nom","Email","Phone"],
+"actionColumns" :[ "details", "delete","Add"],
+"titleList":"User List "
+   
+    }    

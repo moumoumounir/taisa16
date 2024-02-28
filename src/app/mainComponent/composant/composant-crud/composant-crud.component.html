@@ -1,0 +1,581 @@
+<!-- div class="config-field col-10" -->
+
+<div style="font-size: smaller;">
+  <form [formGroup]="myFormGroup" (ngSubmit)="onSubmit()">
+    <div class="text-center">
+    <legend> {{formTitle}}  </legend>
+     </div>
+    <BR />
+    <BR />
+    <!--div *ngIf="formInputLoop.length > 0" >
+      <mat-form-field>
+          <input matInput [matDatepicker]="picker" placeholder="Date" formControlName="Date" >
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>  
+  </div -->
+
+    <div *ngIf="formInputLoop.length > 0" class="col">
+
+      <div>
+          <div *ngFor="let form_elem of formInputLoop1">
+          <br>
+
+          <div *ngIf="form_elem.type=='pickDate'" class="row col-10">
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="{{ form_elem.label }}" formControlName="{{ form_elem.label }}" >
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>  
+        </div>
+
+        <div *ngIf="form_elem.type=='startDate'" class="row col-10">
+              <mat-form-field>
+                  <input matInput [matDatepicker]="picker1" placeholder="Start Date" [formControl]="startDate">
+                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                  <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>  
+        </div>
+
+        <div *ngIf="form_elem.type=='endDate'" class="row col-10">
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker2" placeholder="End Date"
+                 [min]="startDate.value" [formControl]="endDate">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>           
+        </div>
+
+        <div *ngIf="form_elem.type == 'password'">
+            <label
+              ><b>{{ form_elem.label }}</b>
+              <img
+                class="info"
+                (click)="showHelp(form_elem.help)"
+                src="assets/info.png"
+            /></label>
+            <input type="password" formControlName="{{ form_elem.label }}" />
+          </div>
+          
+          <div *ngIf="form_elem.type == 'Nothing'">
+            <label
+              style="width: 30%;height: 30px;"
+              for="test"
+              *ngIf="myFormGroup.get(form_elem.label)"
+              ><b></b>
+            </label>
+
+           
+          </div>
+          <div *ngIf="form_elem.type == 'NothingDate'">
+            <label
+              style="width: 30%;height: 55px;"
+              for="test"
+              *ngIf="myFormGroup.get(form_elem.label)"
+              ><b></b>
+            </label>
+
+           
+          </div>
+          <div *ngIf="form_elem.type == 'text'">
+            <label
+              style="width: 30%"
+              for="test"
+              *ngIf="myFormGroup.get(form_elem.label)"
+              ><b>{{ form_elem.label }}</b>
+            </label>
+
+            :<input
+            [ngClass]="{'disable':form_elem.disabled,'enable':!form_elem.disabled}"
+            [readonly]="form_elem.disabled"
+
+              id="test"
+              *ngIf="myFormGroup.get(form_elem.label)"
+              type="text"
+              formControlName="{{ form_elem.label }}"
+            />
+            <div
+            style="color: red"
+            *ngIf="myFormGroup.get(form_elem.label)?.errors != null"
+          >
+            {{ form_elem.label }}  {{getObjectString(myFormGroup.get(form_elem.label)?.errors)}} Error 
+          </div>
+          </div>
+
+          <div *ngIf="form_elem.type == 'number'">
+            <label
+              style="width: 30%"
+              for="test"
+              *ngIf="myFormGroup.get(form_elem.label)"
+              ><b>{{ form_elem.label }}</b>
+            </label>
+
+            :<input
+            [ngClass]="{'disable':form_elem.disabled,'enable':!form_elem.disabled}"
+            [readonly]="form_elem.disabled"
+
+              id="test"
+              *ngIf="myFormGroup.get(form_elem.label)"
+              type="number" min="0"
+              formControlName="{{ form_elem.label }}"
+            />
+          </div>
+
+          <div *ngIf="form_elem.type == 'select'">
+            <div>
+              <label
+                style="width: 30%"
+                for="test"
+                *ngIf="myFormGroup.get(form_elem.label)"
+                ><b>{{ form_elem.label }}</b>
+              </label>
+              :<select
+                style="width: 68%"
+                [attr.disabled]="form_elem.disabled == 1 ? '' : null"
+                id="test"
+                (change)="SelectOnChange($event.target)"
+                formControlName="{{ form_elem.label }}"
+              >
+                <option value="" disabled selected>Select your option</option>
+                <option
+                  *ngFor="let item of form_elem.paramValue"
+                  [ngValue]="item"
+                >
+                  {{ item }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div *ngIf="form_elem.type == 'selectMultiple'">
+            <label *ngIf="myFormGroup.get(form_elem.label)"
+              ><b>{{ form_elem.label }}</b>
+            </label>
+            <mat-select
+              class="form-select"
+              formControlName="{{ form_elem.label }}"
+              multiple
+              (ngModelChange)="onSelectMultipleChange($event)"
+            >
+              <mat-option
+                *ngFor="let topping of form_elem.paramValue"
+                [value]="topping"
+                >{{ topping }}</mat-option
+              >
+            </mat-select>
+          </div>
+          <div *ngIf="form_elem.type == 'checkbox'">
+            <label *ngIf="myFormGroup.get(form_elem.label)"
+              ><b>{{ form_elem.label }}</b>
+            </label>
+            <div *ngFor="let block of form_elem.paramValue">
+              <input
+                type="checkbox"
+                value="{{ block }}"
+                formControlName="{{ form_elem.label }}"
+                (change)="onCheckChangesNext($event)"
+              />{{ block }}
+            </div>
+          </div>
+
+          <div *ngIf="form_elem.type == 'file'">
+
+            <!--label  for="fileyytr">
+              <mat-icon>folder</mat-icon> Choose a File: {{ selectedFileName}}
+            </label>
+
+
+            <input style="display: none;"
+              formControlName="{{ form_elem.label }}"
+              type="file"
+              id="fileyytr"
+              (change)="onFileChanged($event)"
+          -->
+
+            <label for="fileInput">
+              <mat-icon  style="cursor: pointer;color:yellow">folder</mat-icon> Choose a File : {{ selectedFileName}}
+            </label>
+            <input id="fileInput" type="file"  (change)="onFileChanged($event)" style="display: none;">
+            
+            <div >
+              <br>
+                    <div class="card " *ngIf="selectedFileName !='' " >
+                        <div class="card-header" id="header-finalizado">Preview File :{{ selectedFileName }}</div>
+                            <div class="card-body">
+                            <iframe  [src]="sanitizer.bypassSecurityTrustResourceUrl(fileBase64)" width="80%" height="200px"></iframe>
+
+                            </div>
+                    </div>
+              </div>
+
+          </div>
+
+          <div *ngIf="form_elem.type == 'ValueApiSelect'">
+            <div
+              *ngIf="spinerSelectedFieldpopUp"
+              class="wrapper"
+              style="height: 20px; align-self: center"
+            >
+              <mat-progress-spinner
+                style="left: 50%"
+                class="inner"
+                mode="indeterminate"
+                diameter="40"
+              ></mat-progress-spinner>
+            </div>
+            <div>
+              <label style="width: 30%" *ngIf="myFormGroup.get(form_elem.label)"
+                ><b>{{ form_elem.label }}</b>
+              </label>
+              :<button
+                type="button"
+                matTooltip="select file"
+                class="btn btn-default"
+                (click)="loadSelectionList(form_elem)"
+              >
+                <mat-icon style="margin-top: 10%">collections</mat-icon>
+              </button>
+              <input
+                style="
+                  background-color: transparent;
+                  border: none;
+                  outline: none;
+                "
+                [readonly]="form_elem.disabled"
+                *ngIf="myFormGroup.get(form_elem.label)"
+                type="text"
+                formControlName="{{ form_elem.label }}"
+              />
+            </div>
+            <div
+              style="color: red"
+              *ngIf="myFormGroup.get(form_elem.label)?.hasError('required')"
+            >
+              {{ form_elem.label }} is required
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+      <!--               -->
+      <div>
+
+          <div *ngFor="let form_elem of formInputLoop2">
+            <br>
+  
+            <div *ngIf="form_elem.type=='pickDate'">
+              <label
+              style="width: 30%"
+              for="test"
+              *ngIf="myFormGroup.get(form_elem.label)"
+              ><b>{{ form_elem.label }}</b>
+            </label>
+            :<mat-form-field style="width: 65%;" id="test">
+                  <input matInput [matDatepicker]="picker" placeholder="{{ form_elem.label }}"  formControlName="{{ form_elem.label }}" >
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>  
+          </div>
+  
+              <div *ngIf="form_elem.type=='startDate'" class="row col-10">
+                <mat-form-field>
+                    <input matInput [matDatepicker]="picker1" placeholder="Start Date" [formControl]="startDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>  
+            </div>
+  
+          <div *ngIf="form_elem.type=='endDate'" class="row col-10">
+              <mat-form-field>
+                  <input matInput [matDatepicker]="picker2" placeholder="End Date"
+                   [min]="startDate.value" [formControl]="endDate">
+                  <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                  <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>           
+              
+          </div>
+            <div *ngIf="form_elem.type == 'password'">
+              <label
+                ><b>{{ form_elem.label }}</b>
+                <img
+                  class="info"
+                  (click)="showHelp(form_elem.help)"
+                  src="assets/info.png"
+              /></label>
+              <input type="password" formControlName="{{ form_elem.label }}" />
+            </div>
+            <div *ngIf="form_elem.type == 'Nothing'">
+              <label
+                style="width: 30%;height: 30px;"
+                for="test"
+                *ngIf="myFormGroup.get(form_elem.label)"
+                ><b></b>
+              </label>
+             
+             
+            </div>
+            <div *ngIf="form_elem.type == 'NothingDate'">
+              <label
+                style="width: 30%;height: 55px;"
+                for="test"
+                *ngIf="myFormGroup.get(form_elem.label)"
+                ><b></b>
+              </label>
+             
+             
+            </div>
+            <div *ngIf="form_elem.type == 'text'">
+              <label
+                style="width: 30%"
+                for="test"
+                *ngIf="myFormGroup.get(form_elem.label)"
+                ><b>{{ form_elem.label }}</b>
+              </label>
+  
+              :<input
+              [ngClass]="{'disable':form_elem.disabled,'enable':!form_elem.disabled}"
+              [readonly]="form_elem.disabled"
+  
+                id="test"
+                *ngIf="myFormGroup.get(form_elem.label)"
+                type="text"
+                formControlName="{{ form_elem.label }}"
+              />
+              <div
+                style="color: red"
+                *ngIf="myFormGroup.get(form_elem.label)?.errors != null"
+              >
+                {{ form_elem.label }}  {{getObjectString(myFormGroup.get(form_elem.label)?.errors)}} Error 
+              </div>
+            </div>
+            <div *ngIf="form_elem.type == 'number'">
+              <label
+                style="width: 30%"
+                for="test"
+                *ngIf="myFormGroup.get(form_elem.label)"
+                ><b>{{ form_elem.label }}</b>
+              </label>
+  
+              :<input
+              [ngClass]="{'disable':form_elem.disabled,'enable':!form_elem.disabled}"
+              [readonly]="form_elem.disabled"
+  
+                id="test"
+                *ngIf="myFormGroup.get(form_elem.label)"
+                type="number"  min="0"
+                formControlName="{{ form_elem.label }}"
+              />
+            </div>
+            <div *ngIf="form_elem.type == 'select'">
+              <div>
+                <label
+                  style="width: 30%"
+                  for="test"
+                  *ngIf="myFormGroup.get(form_elem.label)"
+                  ><b>{{ form_elem.label }}</b>
+                </label>
+                :<select
+                  style="width: 68%"
+                  [attr.disabled]="form_elem.disabled == 1 ? '' : null"
+                  id="test"
+                  (change)="SelectOnChange($event.target)"
+                  formControlName="{{ form_elem.label }}"
+                >
+                  <option value="" disabled selected>Select your option</option>
+                  <option
+                    *ngFor="let item of form_elem.paramValue"
+                    [ngValue]="item"
+                  >
+                    {{ item }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div *ngIf="form_elem.type == 'selectMultiple'">
+              <label *ngIf="myFormGroup.get(form_elem.label)"
+                ><b>{{ form_elem.label }}</b>
+              </label>
+              <mat-select
+                class="form-select"
+                formControlName="{{ form_elem.label }}"
+                multiple
+                (ngModelChange)="onSelectMultipleChange($event)"
+              >
+                <mat-option
+                  *ngFor="let topping of form_elem.paramValue"
+                  [value]="topping"
+                  >{{ topping }}</mat-option
+                >
+              </mat-select>
+            </div>
+            <div *ngIf="form_elem.type == 'checkbox'">
+              <label *ngIf="myFormGroup.get(form_elem.label)"
+                ><b>{{ form_elem.label }}</b>
+              </label>
+              <div *ngFor="let block of form_elem.paramValue">
+                <input
+                  type="checkbox"
+                  value="{{ block }}"
+                  formControlName="{{ form_elem.label }}"
+                  (change)="onCheckChangesNext($event)"
+                />{{ block }}
+              </div>
+            </div>
+  
+            <div *ngIf="form_elem.type == 'file'">
+  
+              <!--label  for="fileyytr">
+                <mat-icon>folder</mat-icon> Choose a File: {{ selectedFileName}}
+              </label>
+  
+  
+              <input style="display: none;"
+                formControlName="{{ form_elem.label }}"
+                type="file"
+                id="fileyytr"
+                (change)="onFileChanged($event)"
+            -->
+  
+              <label for="fileInput">
+                <mat-icon  style="cursor: pointer;color:yellow">folder</mat-icon> Choose a File : {{ selectedFileName}}
+              </label>
+              <input id="fileInput" type="file"  (change)="onFileChanged($event)" style="display: none;">
+              
+              <div >
+                <br>
+                      <div class="card " *ngIf="selectedFileName !='' " >
+                          <div class="card-header" id="header-finalizado">Preview File :{{ selectedFileName }}</div>
+                              <div class="card-body">
+                              <iframe  [src]="sanitizer.bypassSecurityTrustResourceUrl(fileBase64)" width="80%" height="200px"></iframe>
+  
+                              </div>
+                      </div>
+                </div>
+  
+            </div>
+  
+            <div *ngIf="form_elem.type == 'ValueApiSelect'">
+              <div
+                *ngIf="spinerSelectedFieldpopUp"
+                class="wrapper"
+                style="height: 20px; align-self: center"
+              >
+                <mat-progress-spinner
+                  style="left: 50%"
+                  class="inner"
+                  mode="indeterminate"
+                  diameter="40"
+                ></mat-progress-spinner>
+              </div>
+              <div>
+                <label style="width: 30%" *ngIf="myFormGroup.get(form_elem.label)"
+                  ><b>{{ form_elem.label }}</b>
+                </label>
+                :<button
+                  type="button"
+                  matTooltip="select file"
+                  class="btn btn-default"
+                  (click)="loadSelectionList(form_elem)"
+                >
+                  <mat-icon style="margin-top: 10%">collections</mat-icon>
+                </button>
+                <input
+                  style="
+                    background-color: transparent;
+                    border: none;
+                    outline: none;
+                  "
+                  [readonly]="form_elem.disabled"
+                  *ngIf="myFormGroup.get(form_elem.label)"
+                  type="text"
+                  formControlName="{{ form_elem.label }}"
+                />
+              </div>
+              <div
+                style="color: red"
+                *ngIf="myFormGroup.get(form_elem.label)?.errors?.['required']"
+              >
+                {{ form_elem.label }} is required
+              </div>
+            </div>
+  
+  
+          </div>
+        <!--               -->
+      </div>
+    </div>
+    <!--            one colonumns                                    -->
+    <div
+    *ngIf="spinerSelectedField"
+    class="wrapper"
+    style="height: 20px; align-self: center"
+    >
+    <mat-progress-spinner
+      style="left: 50%"
+      class="inner"
+      mode="indeterminate"
+      diameter="40"
+    ></mat-progress-spinner>
+    </div>
+    <div *ngFor="let form_elem of formInputLoop">
+      <div
+        *ngIf="form_elem.type == 'uploadFile' && myFormGroup.get(form_elem.label)?.value !='' "
+        class="col-6"
+      >
+        <BR />
+        <label
+          style="width: 30%"
+          for="test"
+          *ngIf="myFormGroup.get(form_elem.label)"
+          ><b>{{ form_elem.label }}</b>
+        </label>
+
+        :<input
+          style="background-color: transparent; border: none; outline: none"
+          id="test"
+          formControlName="{{ form_elem.label }}"
+          type="text"
+        />
+        <button type="button" matTooltip="Download File" class="btn" (click)="download()">
+          <mat-icon style="margin-top: 15%">download</mat-icon>
+        </button>
+      </div>
+
+      <div *ngIf="form_elem.type == 'textarea'" class="row">
+        <label
+          ><b>{{ form_elem.label }}</b>
+        </label>
+        <textarea
+          class="form-control"
+          rows="3"
+          cols="35"
+          spellcheck="false"
+          style="font-size: 10px"
+          [readonly]="form_elem.disabled"
+          formControlName="{{ form_elem.label }}"
+        >
+        </textarea>
+      </div>
+    </div>
+
+    <!--div style="display: flex; justify-content: center">
+      <input
+        style="width: 25%"
+        *ngIf="formInputLoop.length > 0"
+        type="submit"
+        class="btn btn-config"
+        value="{{ submitLabel }}"
+      />  
+    </div -->
+
+      <BR>
+        <BR>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary mr-1">Register</button>&nbsp;&nbsp;
+                <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+            </div>
+
+
+  
+  </form>
+</div>

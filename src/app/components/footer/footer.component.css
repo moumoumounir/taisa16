@@ -1,0 +1,48 @@
+.footer{
+    background-color: #3c3c3b;
+    color: #ffffff;
+    padding: 15px 10%;
+    padding-bottom: 50px !important;    
+    margin-top: 50px;
+    display: block;
+}
+
+.logo-umayor-footer{
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+    width:200px;
+    float: left;
+    display: block;
+    margin-right: 50px;
+    margin-bottom: 30px;
+}
+
+.footer-column{
+    width: 20%;
+    margin-right: 10px;
+    float:left;
+    height:100%;
+}
+
+.footer-column :last-child{
+    margin-right:0px;
+}
+
+h5{
+    font-size: 20px;
+    color: #eecd3e;
+    font-weight: bold;
+}
+
+a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.iconify{
+    font-size: 30px;
+}
+
+p{
+    margin:3px;
+}

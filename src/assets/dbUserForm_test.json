@@ -1,0 +1,32 @@
+{"form":{
+    "Prenom"	:{"type":"text","label":"Prenom","value":""	,"disabled":false},	
+    "Nom"		:{"type":"text","label":"Nom","value":""	 	,"disabled":false},
+    "Ref"		:{"type":"startDate","label":"Ref","value":""	 	,"disabled":false},
+	
+    "Email"		:{"type":"endDate","label":"Email","value":""	,"disabled":false},	
+     
+    "Phone"		:{"type":"text","label":"Phone","value":""	,"disabled":false},
+	"file"		:{"type":"file","label":"Phone","value":""	,"disabled":false},
+	"Parent1": {"type":"selectMultiple","label":"Parent","value":"BI","paramValue": ["","SI","Data","BI","BIProd","BiReport","DBDMC" ],"diseable": "1"  },
+	"Parent": {"type":"select","label":"Parent1","value":"BI","paramValue": ["","SI","Data","BI","BIProd","BiReport","DBDMC" ],"diseable": "1"  }
+	
+},
+"formChangePassword":{
+    "Prenom"	:{"type":"text","label":"Prenom","value":""	,"disabled":true},	
+    "Nom"		:{"type":"text","label":"Nom","value":""	 	,"disabled":true},
+    "Ref"		:{"type":"text","label":"Ref","value":""	 	,"disabled":true},
+	
+    "Email"		:{"type":"text","label":"Email","value":""	,"disabled":true},
+    "Password"	:{"type":"password","label":"Password","value":""	,"disabled":false},	
+     
+    "Phone"		:{"type":"text","label":"Phone","value":""	,"disabled":true}
+},
+
+
+"TitleFormObject":"User Details",
+"TitleFormChangePassword":"User Details : Change Password",
+"displayedColumns" : [	"Ref", 	"Prenom","Nom","Email","Phone"],
+"actionColumns" :[ "details", "delete","Add"],
+"titleList":"User List "
+   
+    }    

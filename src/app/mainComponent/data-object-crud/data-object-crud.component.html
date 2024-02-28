@@ -1,0 +1,66 @@
+<div style="font-size: smaller;">
+  <form [formGroup]="myFormGroup" (ngSubmit)="onSubmit()">
+    <div class="text-center">
+      <legend> {{formTitle}} </legend>
+    </div>
+    <BR />
+    <BR />
+    <BR />
+    <div class="col">
+      <div>
+        <div>
+          <label class="label" for='test'>
+            <b>Ref Object</b> </label>
+          :<input class="field" id="test" type="text" formControlName="Ref Object">
+        </div>
+        <div>
+          <label class="label" style="width: 30%" for="test"><b>Type</b>
+          </label>
+          :<select class="field" id="test" (change)="SelectOnChange($event.target)" formControlName="Type">
+            <option value='' disabled selected>Select your option</option>
+            <option *ngFor="let item of  [ 'DB', 'Table Details', 'Table KPI' ] " [ngValue]="item">
+              {{ item }}
+            </option>
+          </select>
+        </div>
+        <div>
+          <label class="label" for='test'>
+            <b>Data Owner</b> </label>
+          :<input class="field" id="test" type="text" formControlName="Data Owner">
+        </div>
+      </div>
+      <div>
+        <div>
+          <label class="label" for='test'>
+            <b>Short Description</b> </label>
+          :<input class="field" id="test" type="text" formControlName="Short Description">
+        </div>
+        <div>
+          <label class="label" style="width: 30%" for="test"><b>Parent</b>
+          </label>
+          :<select class="field" id="test" (change)="SelectOnChange($event.target)" formControlName="Parent">
+            <option value='' disabled selected>Select your option</option>
+            <option *ngFor="let item of  [ 'SI', 'Data', 'BI', 'BIProd', 'BiReport', 'DBDMC' ] " [ngValue]="item">
+              {{ item }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <label>
+        <b>Long Description</b> </label>
+      <textarea class="form-control" rows='3' cols='35' spellcheck="false" style="font-size: 10px" formControlName="Long Description">
+       </textarea>
+    </div>
+    <BR>
+    <BR>
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary mr-1">Register</button>&nbsp;&nbsp;
+      <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+    </div>
+
+
+
+  </form>
+</div>

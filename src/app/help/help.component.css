@@ -1,0 +1,10 @@
+
+.image-cont {
+    display: flex;
+    flex: 1 1 0;
+   }
+   .image-cont img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+ 
